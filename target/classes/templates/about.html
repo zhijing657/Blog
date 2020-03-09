@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我</title>
+    <link rel="stylesheet" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body class="body-background">
+<!--    导航-->
+<nav th:replace="_fragments :: menu(5)"></nav>
+
+<!--     中间内容-->
+    <div class="m-padded-tb-big">
+        <div class="ui container">
+            <div class="ui stackable grid">
+                <div class="eleven wide column">
+                    <img th:src="@{/image/photo.jpg}" alt="" class="ui rounded image" style="width: 600px">
+                </div>
+                <div class="five wide column">
+                    <div class="ui top attached segment">
+                        <div class="ui header">关于我</div>
+                    </div>
+                    <div class="ui middle aligned attached segment">
+<!--                        <p class="m-text-thin m-text-lined m-text-space">本毕业于广东水利电力职业技术学院，JAVA初学者此为完成spring boot后所搭载的第一个项目，还有bug要改。</p>-->
+<!--                        <p class="m-text-thin m-text-lined m-text-space">此页面为静态页面。</p>
+-->
+                        <img src="http://120.25.155.54:8080/zhijing/prictrue.png" alt="" class="ui rounded image" style="width: 250px">
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui orange basic left pointing label m-margin-lr-tiny">编程</div>
+                        <div class="ui orange basic left pointing label m-margin-lr-tiny">看电影</div>
+                        <div class="ui orange basic left pointing label m-margin-lr-tiny">听音乐</div>
+                        <div class="ui orange basic left pointing label m-margin-lr-tiny">发现</div>
+                    </div>
+                    <div class="ui attached segment">
+                        <div class="ui teal basic left pointing label m-margin-lr-tiny m-margin-tb-tiny">Java</div>
+                        <div class="ui teal basic left pointing label m-margin-lr-tiny m-margin-tb-tiny">Spring</div>
+                        <div class="ui teal basic left pointing label m-margin-lr-tiny m-margin-tb-tiny">MyBatis</div>
+                        <div class="ui teal basic left pointing label m-margin-lr-tiny m-margin-tb-tiny">SpringBoot</div>
+                        <div class="ui teal basic left pointing label m-margin-lr-tiny m-margin-tb-tiny">Vue</div>
+                    </div>
+                    <div class="ui bottom attached segment">
+                        <a href="https://github.com/zhijing657?tab=repositories" class="ui circular icon button"><i class="ui github icon"></i></a>
+                        <a  class="ui wechar circular icon button"><i class="ui weixin icon"></i></a>
+                        <a  class="ui qq circular icon button" data-content="1026993470" data-position="top center"><i class="ui qq icon"></i></a>
+                    </div>
+                    <div class="ui wechar-QR flowing popup transition hidden">
+                        <img src="http://120.25.155.54:8080/zhijing/prictrue.png" alt="" class="ui rounded image" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<!--    底部-->
+<footer th:replace="_fragments :: footer"></footer>
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<script>
+    $('.m-mobile-show').click(function () {
+        $('.m-item').toggleClass('m-mobile')
+    })
+
+    $('.qq').popup();
+
+    $('.wechar').popup({
+        popup : $('.wechar-QR'),
+
+        position:'top center'
+    });
+</script>
+</body>
+</html>

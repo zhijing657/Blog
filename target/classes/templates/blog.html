@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客</title>
+    <link rel="stylesheet" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" th:href="@{/css/me.css}">
+    <link rel="stylesheet" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body class="body-background">
+<!--    导航-->
+    <nva th:replace="_fragments :: menu(1)"></nva>
+
+
+<!--     中间内容-->
+    <div id="waypoint" class="m-padded-tb-big m-container-small animated fadeInDown">
+        <div class="ui container">
+            <div class="ui top attached segment">
+                <div class="ui horizontal link list">
+                    <div class="item">
+                        <img th:src="${blog.getUser().getAvatar()}" alt="" class="ui avatar image">
+                        <div class="content"><a th:href="@{/about}" class="header" >ZhiJing</a></div>
+                    </div>
+                    <div class="item">
+                        <i class="calendar icon"></i><span th:text="${#dates.format(blog.getUpdate_time(),'yyyy/MM/dd')}"></span>
+                    </div>
+                    <div class="item">
+                        <i class="eye icon"></i><span th:text="${blog.getViews()}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui  attached segment">
+                <img th:src="${blog.getFirst_picture()}" alt="" width="800px" height="450px" class="ui fluid rounded image">
+            </div>
+            <div class="ui  attached padded segment">
+                <div class="ui right aligned basic segment">
+                    <div class="ui label basic orange " th:text="${blog.getFlag()}"></div>
+                </div>
+                <h2 class="ui center aligned header" th:text="${blog.getTitle()}"></h2>
+                <div id="content" class="typo js-toc-content typo-selection m-padded-lr-responsive" th:utext="${blog.getContent()}">
+                </div>
+                <br>
+                <br>
+                <div class="m-padded-lr-responsive m-padded-tb-big">
+                    <div class="ui basic teal left pointing label" th:each="tag:${blog.getTags()}" th:text="${tag.getName()}">读书</div>
+                </div>
+                <div class="ui center aligned basic segment">
+<!--                    display: block;-->
+<!--                    display: none;-->
+                    <button id="payButton" class="ui orange basic circular button" th:style="${blog.isAppreciation()==true ? '': 'display: none'}"> 赞赏 </button>
+                </div>
+                <div class="ui payQ flowing popup transition hidden">
+                    <div class="ui orange basic label">
+                        <div class="ui images" style="font-size: inherit !important;">
+                            <div class="image">
+                                <img th:src="@{http://120.25.155.54:8080/zhijing/奇怪的知识增加了.png}" alt=""
+                                     class="ui rounded bordered image" width="100px" height="100px">
+                                <div>微信</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui  attached positive message">
+<!--                博客信息-->
+                <div class="ui grid">
+                    <div class="eleven wide column">
+                        <ul class="list">
+                            <li>作者&emsp;:&emsp;<span th:text="${blog.getUser().getNickName()}"></span> <a th:href="@{/about}" target="_blank">(联系作者)</a></li>
+                            <li>更新时间&emsp;:&emsp;<span th:text="${#dates.format(blog.getUpdate_time(),'yyyy/MM/dd--hh:mm')}"></span></li>
+                            <li>版权声明&emsp;:&emsp;自由转载&emsp;非商用&emsp;非衍生&emsp;保持署名</li>
+                            <li>公众号转载&emsp;:&emsp;请在文末添加作者公众号二维码</li>
+                        </ul>
+                    </div>
+                    <div class="five wide column">
+                        <img th:src="@{http://120.25.155.54:8080/zhijing/奇怪的知识增加了.png}" alt="" class="ui right floated rounded image" style="width: 100px">
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached segment">
+<!--                留言-->
+                <div class="ui teal segment">
+                    <div class="ui comments">
+                        <h3 class="ui dividing header">Comments</h3>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img th:src="@{/image/photo.jpg}">
+                            </a>
+                            <div class="content">
+                                <a class="author">Matt</a>
+                                <div class="metadata">
+                                    <span class="date">Today at 5:42PM</span>
+                                </div>
+                                <div class="text">
+                                    太赞了！
+                                </div>
+                                <div class="actions">
+                                    <a class="reply">Reply</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <a class="avatar">
+                                <img th:src="@{/image/photo.jpg}">
+                            </a>
+                            <div class="content">
+                                <a class="author">Elliot Fu</a>
+                                <div class="metadata">
+                                    <span class="date">Yesterday at 12:30AM</span>
+                                </div>
+                                <div class="text">
+                                    <p>這對我的研究是非常有用.謝謝!</p>
+                                </div>
+                                <div class="actions">
+                                    <a class="reply">Reply</a>
+                                </div>
+                            </div>
+                            <div class="comments">
+                                <div class="comment">
+                                    <a class="avatar">
+                                        <img th:src="@{/image/photo.jpg}">
+                                    </a>
+                                    <div class="content">
+                                        <a class="author">Jenny Hess</a>
+                                        <div class="metadata">
+                                            <span class="date">Just now</span>
+                                        </div>
+                                        <div class="text">
+                                            艾略特你永远是多么正确 :)
+                                        </div>
+                                        <div class="actions">
+                                            <a class="reply">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment" id="comment-id">
+                            <a class="avatar">
+                                <img th:src="@{/image/photo.jpg}">
+                            </a>
+                            <div class="content">
+                                <a class="author">Joe Henderson</a>
+                                <div class="metadata">
+                                    <span class="date">5 days ago</span>
+                                </div>
+                                <div class="text">
+                                    老兄，这太棒了。非常感谢。
+                                </div>
+                                <div class="actions">
+                                    <a class="reply">Reply</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui form">
+                    <div class="field">
+                        <textarea name="content" placeholder="请输入评论....."></textarea>
+                    </div>
+                    <div class="fields">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="nickname" placeholder="姓名">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" placeholder="邮箱">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <button class="ui teal button"> <i class="edit icon"></i>发表</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toolbar" class="m-fix m-right-bottom m-padded-lr" style="display: none">
+        <div class="ui vertical icon buttons ">
+            <button type="button" class="ui toc teal button">目录</button>
+            <a href="#comment-id" class="ui teal button">留言</a>
+            <button type="button" class="ui wechar teal icon button"> <i class="weixin icon"></i> </button>
+            <div id="toTopButton" class="ui teal icon button"><i class="chevron up icon"></i> </div>
+        </div>
+    </div>
+    <div id="qrcode" class="ui wechar-QR flowing popup transition hidden" style="width: 150px !important;">
+<!--        <img src="static/image/photo.jpg" alt="" class="ui rounded image" style="width: 150px !important;">-->
+    </div>
+    <div class="ui toc-container flowing popup transition hidden" style="width: 250px !important;">
+        <ol class="js-toc">
+        </ol>
+    </div>
+    </div>
+<!--    底部-->
+<footer th:replace="_fragments :: footer"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+<script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+<script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+<script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+<script th:inline="javascript">
+    $('.m-mobile-show').click(function () {
+        $('.m-item').toggleClass('m-mobile')
+    })
+
+    $('.toc.button').popup({
+        popup : $('.toc-container'),
+        on:'click',
+        position:'left center'
+    });
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.js-toc-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h1, h2, h3',
+        // For headings inside relative or absolute positioned containers within content.
+        hasInnerContainers: true,
+    });
+
+    $('.wechar').popup({
+        popup : $('.wechar-QR'),
+        position:'left center'
+    });
+    //http://localhost:8080/blog/1577792888747
+    var serurl = "http://127.0.0.1:8080";
+    var url = /*[[@{/blog/{id}(id=${blog.getId()})}]]*/"";
+    console.log(serurl+url)
+    var qrcode = new QRCode("qrcode", {
+        text: serurl+url,
+        width: 128,
+        height: 128,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+    $('#toTopButton').click(function () {
+        $(window).scrollTo(0,1000)
+    })
+
+    var waypoint = new Waypoint({
+        element: document.getElementById('waypoint'),
+        handler: function(direction) {
+            if (direction == 'down'){
+                $('#toolbar').show(1000)
+            }
+            if (direction == 'up'){
+                $('#toolbar').hide(1000)
+            }
+            console.log('Scrolled to waypoint!' + direction)
+        }
+    })
+</script>
+</body>
+</html>

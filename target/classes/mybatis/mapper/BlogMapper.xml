@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhijing.mapper.BlogMapper">
+
+    <select id="getBlog" resultType="Blog">
+        select *
+        from t_blog
+        where id = #{id}
+    </select>
+
+    <select id="getAllBlog" resultType="Blog">
+        select *
+        from t_blog
+    </select>
+
+    <select id="getBlogByTypeId" resultType="Blog">
+        select *
+        from t_blog
+        where type_id = #{type_id}
+    </select>
+
+    <select id="getLimitBlogs" resultType="Blog" parameterType="map">
+        select *
+        from t_blog
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="getBlogByCondition" parameterType="map" resultType="Blog">
+        select *
+        from t_blog
+        <where>
+            <if test="title!=null">
+                title=#{title}
+            </if>
+            <if test="type_id!= null">
+                and type_id=#{type_id}
+            </if>
+            <if test="recommend != null">
+                and recommend=#{recommend}
+            </if>
+        </where>
+    </select>
+    
+    <insert id="saveBlog" parameterType="Blog">
+        insert into t_blog (appreciation, commentabled, content, create_time,
+            first_picture, flag, published, recommend, share_statement, title,
+            update_time, views, type_id, user_id,tag_ids,description)
+        values (#{appreciation},#{commentabled},#{content},#{create_time},
+            #{first_picture},#{flag},#{published},#{recommend},#{share_statement},#{title},
+            #{update_time},#{views},#{type_id},#{user_id},#{tag_ids},#{description});
+    </insert>
+
+    <update id="updateBlog" parameterType="Blog">
+        update t_blog
+        set appreciation=#{appreciation}, commentabled=#{commentabled}, content=#{content},
+            first_picture=#{first_picture}, flag=#{flag}, published=#{published},
+            recommend=#{recommend}, share_statement=#{share_statement}, title=#{title},
+            update_time=#{update_time}, type_id=#{type_id},tag_ids=#{tag_ids},description=#{description}
+        where id=#{id};
+    </update>
+
+    <update id="updateBlogViews" parameterType="Blog">
+        update t_blog
+        set views=#{views}
+        where id=#{id};
+    </update>
+
+
+    <delete id="deleteBlog">
+        delete from t_blog where id=#{id}
+    </delete>
+
+    <select id="getBlogByUtAndIP" resultType="Blog">
+        select *
+        from t_blog
+        where t_blog.published=true
+        order by create_time
+        desc limit 6
+    </select>
+
+    <select id="getBlogByTagId" resultType="Blog">
+        select *
+        from t_blog
+        where tag_ids=#{id}
+    </select>
+
+    <select id="getBlogYearGroup" resultType="string">
+        SELECT year(b.create_time) time from t_blog b GROUP BY year(b.create_time)
+    </select>
+
+    <select id="getBlogByYear" resultType="Blog">
+        SELECT * from t_blog b
+        where DATE_FORMAT(b.create_time,'%Y') = #{year}
+    </select>
+
+    <select id="getBlogCount" resultType="long">
+        SELECT count(0)  from t_blog b
+    </select>
+</mapper>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+    <link rel="stylesheet" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body class="body-background">
+<!--    导航-->
+<nav th:fragment="menu" class="ui inverted attached segment m-padded-tb-mini">
+</nav>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!--中间页面-->
+<div>
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <div th:utext="'Failed Request URL : ' + ${url}" th:remove="tag"></div>
+    <div th:utext="'Exception message : ' + ${exception.message}" th:remove="tag"></div>
+    <ul th:remove="tag">
+        <li th:each="st : ${exception.stackTrace}" th:remove="tag"><span th:utext="${st}" th:remove="tag"></span></li>
+    </ul>
+    <div th:utext="'--&gt;'" th:remove="tag"></div>
+</div>
+<div class="m-container-small m-padded-tb-massive">
+
+    <div class="ui error message">
+        <div class="ui contianer">
+            <h2>Error</h2>
+            <p>出现了意料之外的错误，请联系管理员</p>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!--    底部-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui middle center inverted link list">
+                    <img th:src="@{/image/photo.jpg}" class="ui rounded image" alt="" style="width: 110px">
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a class="item">性别:男</a>
+                    <a class="item">爱好:音乐，电影</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email：zhijing657@gmail.com</a>
+                    <a href="#" class="item">QQ:1026993470</a>
+
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">Blog</h4>
+                <p class="m-opacity-mini m-text-thin">大家都知道，Linux
+                    系统有非常多的命令，而且每个命令又有非常多的用法，想要全部记住所有命令的所有用法，恐怕是一件不可能完成的任务。</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-space m-opacity-mini">ZhiJing @2019 - 2020 All rights reserved. QQ：1026993470</p>
+    </div>
+</footer>
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<script>
+    $('.m-mobile-show').click(function () {
+        $('.m-item').toggleClass('m-mobile')
+    })
+</script>
+</body>
+</html>
+

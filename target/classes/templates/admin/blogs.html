@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客管理</title>
+    <link rel="stylesheet" th:href="@{/css/me.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+</head>
+<body class="body-background">
+<!--    导航-->
+    <nav th:replace="admin/_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    </nav>
+    <div class="ui attached pointing menu">
+        <div class="ui right container">
+            <a th:href="@{/admin/toAddBlogPage}" class="teal item">发布</a>
+            <a th:href="@{/admin/blogs}" class="active teal item">列表</a>
+        </div>
+    </div>
+
+<!--     中间内容-->
+    <div class="m-padded-tb-big m-container-small">
+        <div class="ui container">
+            <form th:action="@{/admin/blogs/search}" method="post" class="ui secondary segment form">
+                <div class="fields">
+                    <div class="field">
+                        <input type="text" placeholder="标题" name="title" th:value="${null}">
+                    </div>
+                    <div class="field">
+                        <div class="ui selection dropdown">
+                            <input type="text" class="hidden" name="type_id">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">分类</div>
+                            <div class="menu">
+                                <div class="item" th:each="type:${types}">
+                                    <div th:value="${type.getId()}" th:text="${type.getName()}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+<!--                        <div class="ui checkbox">-->
+<!--                            <input type="checkbox" id="recommend" name="recommend" th:value="${true}" checked>-->
+<!--                            <label for="recommend">推荐</label>-->
+<!--                        </div>-->
+<!--                        <div class="ui checkbox">-->
+<!--                            <input type="checkbox" id="norecommend" name="recommend" th:value="${false}">-->
+<!--                            <label for="norecommend">自用</label>-->
+<!--                        </div>-->
+                        <div class="inline field" style="margin-top: 0.8em">
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" tabindex="0" class="hidden m-checkbox" name="recommend">
+                                <label>推荐</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field" style="margin-top: 0.4em">
+                        <button type="submit" class="ui mini teal basic button">
+                            <i class="search icon"></i>搜索
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <table th:fragment="blogList" class="ui compact teal table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>标题</th>
+                        <th>类型</th>
+                        <th>推荐</th>
+                        <th>更新时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="blog:${blogs}">
+                        <td th:text="${blog.getId()}"></td>
+                        <td th:text="${blog.getTitle()}"></td>
+                        <td th:text="${blog.getType().getName()}"></td>
+                        <td th:text="${blog.isRecommend()} == true ? '是' : '否'"></td>
+                        <td th:text="${#dates.format(blog.getUpdate_time(),'yyyy-MM-dd hh:mm:ss')}"></td>
+                        <td>
+                            <a th:href="@{/admin/updateBlog/}+${blog.getId()}" class="ui mini teal button">编辑</a>
+                            <a th:href="@{/admin/deleteBlog/}+${blog.getId()}" class="ui mini red button">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot class="center">
+                    <tr>
+                        <th colspan="6">
+                            <div class="ui center float pagination menu">
+                                <a th:href="@{/admin/previousBlogPage}" class="icon item">
+                                    <i class="mini left chevron icon"></i>
+                                </a>
+                                <a th:href="@{/admin/nextBlogPage}" class="icon item">
+                                    <i class="mini right chevron icon"></i>
+                                </a>
+                            </div>
+                            <a class="ui mini floated teal basic button m-move"
+                               style="margin-left: 8em"
+                               th:text="'第'+${blogPage+1}+'页'"></a>
+                            <a th:href="@{/admin/toAddBlogPage}" class="ui mini right floated teal basic button m-move">新增</a>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="ui success message" th:unless="${#strings.isEmpty(result)}">
+                <i class="close icon"></i>
+                <div class="header">提示:</div>
+                <P th:text="${result}"></P>
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<!--    底部-->
+    <footer th:replace="admin/_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    </footer >
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<script>
+    $('.m-mobile-show').click(function () {
+        $('.m-item').toggleClass('m-mobile')
+    })
+
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+
+    $('.message.close')
+        .on('click',function () {
+            $(this)
+                .closest('.message')
+                .transform('fade');
+        });
+
+    $('.ui.checkbox').checkbox();
+
+    var flag = false;
+    $('.m-checkbox').val(flag);
+    console.log($('.m-checkbox').val())
+    $('.ui.checkbox').click(function () {
+        flag = !flag;
+        $('.m-checkbox').val(flag);
+        console.log($('.m-checkbox').val())
+    });
+
+
+
+</script>
+</body>
+</html>

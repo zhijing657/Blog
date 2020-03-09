@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    username: zhijing
+    password: lai990725
+    url: jdbc:mysql://120.25.155.54:3306/blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    cache: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.zhijing.pojo
+
+#logging:
+#  level:
+#    root: info
+#    com.zhijing: info
+#  file: log/blog-pro.log
+server:
+  port: 8657
